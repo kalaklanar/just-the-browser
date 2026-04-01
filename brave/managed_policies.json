@@ -1,0 +1,13 @@
+{
+  "AIModeSettings" : 1,
+  "BraveAIChatEnabled" : 0,
+  "BraveNewsDisabled" : 1,
+  "BraveP3AEnabled" : 0,
+  "BraveRewardsDisabled" : 1,
+  "BraveStatsPingEnabled" : 0,
+  "BraveWalletDisabled" : 1,
+  "BraveWebDiscoveryEnabled" : 0,
+  "DnsOverHttpsMode" : "automatic",
+  "NewTabPageLocation" : "https://search.brave.com",
+  "TorDisabled" : 1
+}
