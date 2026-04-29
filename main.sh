@@ -175,7 +175,7 @@ _main() {
         options+=("Google Chrome: Remove settings")
     fi
     # Chromium without settings applied
-    if [ "$OS" = "Linux" ] && [ -x "$(command -v chromium-browser)" ]; then
+    if [ "$OS" = "Linux" ] && { [ -x "$(command -v chromium-browser)" ] || [ -x "$(command -v chromium)" ]; }; then
         options+=("Chromium: Update settings")
     fi
     # Chromium with settings already applied
