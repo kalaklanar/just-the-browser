@@ -23,7 +23,7 @@ function Show-Header {
 # Previous versions of Just the Browser used the JSON method
 function Uninstall-FirefoxJSON {
     Param(
-        [Parameter(Position= 0, Mandatory= $true)]
+        [Parameter(Position = 0, Mandatory = $true)]
         [String]$InstallPath
     )
     if (Test-Path "$InstallPath\distribution\policies.json") {
@@ -48,7 +48,8 @@ function Install-Chrome {
     $ChromeInstall = Start-Process "reg.exe" -ArgumentList "import `"$env:LocalAppData\chrome.reg`"" -WindowStyle Hidden -Wait -PassThru
     if ($ChromeInstall.ExitCode -eq 0) {
         Read-Host -Prompt "Updated Google Chrome settings. Press Enter/Return to continue" | Out-Null
-    } else {
+    }
+    else {
         Read-Host -Prompt "Install failed! Press Enter/Return to continue" | Out-Null
     }
 }
@@ -69,7 +70,8 @@ function Uninstall-Chrome {
     $ChromeUninstall = Start-Process "reg.exe" -ArgumentList "import `"$env:LocalAppData\chrome.reg`"" -WindowStyle Hidden -Wait -PassThru
     if ($ChromeUninstall.ExitCode -eq 0) {
         Read-Host -Prompt "Removed Google Chrome settings. Press Enter/Return to continue" | Out-Null
-    } else {
+    }
+    else {
         Read-Host -Prompt "Remove failed! Press Enter/Return to continue" | Out-Null
     }
 }
@@ -90,7 +92,8 @@ function Install-Edge {
     $EdgeInstall = Start-Process "reg.exe" -ArgumentList "import `"$env:LocalAppData\edge.reg`"" -WindowStyle Hidden -Wait -PassThru
     if ($EdgeInstall.ExitCode -eq 0) {
         Read-Host -Prompt "Updated Microsoft Edge settings. Press Enter/Return to continue" | Out-Null
-    } else {
+    }
+    else {
         Read-Host -Prompt "Install failed! Press Enter/Return to continue" | Out-Null
     }
 }
@@ -111,7 +114,8 @@ function Uninstall-Edge {
     $EdgeUninstall = Start-Process "reg.exe" -ArgumentList "import `"$env:LocalAppData\edge.reg`"" -WindowStyle Hidden -Wait -PassThru
     if ($EdgeUninstall.ExitCode -eq 0) {
         Read-Host -Prompt "Removed Microsoft Edge settings. Press Enter/Return to continue" | Out-Null
-    } else {
+    }
+    else {
         Read-Host -Prompt "Remove failed! Press Enter/Return to continue" | Out-Null
     }
 }
@@ -119,12 +123,14 @@ function Uninstall-Edge {
 # Install Firefox settings
 function Install-Firefox {
     Param(
-        [Parameter(Position= 0, Mandatory= $true)]
+        [Parameter(Position = 0)]
         [String]$InstallPath
     )
     Show-Header
-    # Delete old JSON configuration if it exists
-    Uninstall-FirefoxJSON "$InstallPath"
+    # Delete old JSON configuration if the Firefox registry path was found, and if the JSON file exists
+    if ($InstallPath) {
+        Uninstall-FirefoxJSON "$InstallPath"
+    }
     # Download file
     Write-Host "Downloading registry file, please wait..."
     try {
@@ -138,7 +144,8 @@ function Install-Firefox {
     $FirefoxInstall = Start-Process "reg.exe" -ArgumentList "import `"$env:LocalAppData\firefox.reg`"" -WindowStyle Hidden -Wait -PassThru
     if ($FirefoxInstall.ExitCode -eq 0) {
         Read-Host -Prompt "Updated Mozilla Firefox settings. Press Enter/Return to continue" | Out-Null
-    } else {
+    }
+    else {
         Read-Host -Prompt "Install failed! Press Enter/Return to continue" | Out-Null
     }
 }
@@ -146,12 +153,14 @@ function Install-Firefox {
 # Remove Firefox settings
 function Uninstall-Firefox {
     Param(
-        [Parameter(Position= 0, Mandatory= $true)]
+        [Parameter(Position = 0)]
         [String]$InstallPath
     )
     Show-Header
-    # Delete old JSON configuration if it exists
-    Uninstall-FirefoxJSON "$InstallPath"
+    # Delete old JSON configuration if the Firefox registry path was found, and if the JSON file exists
+    if ($InstallPath) {
+        Uninstall-FirefoxJSON "$InstallPath"
+    }
     # Download file
     try {
         Invoke-WebRequest $FirefoxUninstallRegistry -OutFile "$env:LocalAppData\firefox.reg"
@@ -164,7 +173,8 @@ function Uninstall-Firefox {
     $FirefoxUninstall = Start-Process "reg.exe" -ArgumentList "import `"$env:LocalAppData\firefox.reg`"" -WindowStyle Hidden -Wait -PassThru
     if ($FirefoxUninstall.ExitCode -eq 0) {
         Read-Host -Prompt "Removed Mozilla Firefox settings. Press Enter/Return to continue" | Out-Null
-    } else {
+    }
+    else {
         Read-Host -Prompt "Remove failed! Press Enter/Return to continue" | Out-Null
     }
 }
@@ -183,9 +193,9 @@ function Show-Menu {
         $GoogleChromeCheck = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Google\Chrome" -ErrorAction SilentlyContinue).AIModeSettings
         if ($null -ne $GoogleChromeCheck) {
             $options.Add(@{
-                Label  = "Google Chrome: Remove settings"
-                Action = { Uninstall-Chrome }
-            })
+                    Label  = "Google Chrome: Remove settings"
+                    Action = { Uninstall-Chrome }
+                })
         }
     }
     # Microsoft Edge without settings applied
@@ -198,9 +208,9 @@ function Show-Menu {
         $MicrosoftEdgeCheck = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Edge" -ErrorAction SilentlyContinue).HideFirstRunExperience
         if ($null -ne $MicrosoftEdgeCheck) {
             $options.Add(@{
-                Label  = "Microsoft Edge: Remove settings"
-                Action = { Uninstall-Edge }
-            })
+                    Label  = "Microsoft Edge: Remove settings"
+                    Action = { Uninstall-Edge }
+                })
         }
     }
     # Mozilla Firefox
@@ -208,20 +218,32 @@ function Show-Menu {
         # Find the current version installed, like: 147.0.1 (AArch64 en-US)
         $FirefoxVersion = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Mozilla\Mozilla Firefox" -ErrorAction SilentlyContinue).CurrentVersion
         # Find the registry values for the specified version
-        if (Test-Path "HKLM:\SOFTWARE\Mozilla\Mozilla Firefox\$FirefoxVersion\Main") {
+        if (Test-Path "HKLM:\SOFTWARE\Mozilla\Mozilla Firefoxx\$FirefoxVersion\Main") {
             # Finds the installation path, like: C:\Program Files\Mozilla Firefox
             $FirefoxPath = (Get-ItemProperty -Path "HKLM:\SOFTWARE\Mozilla\Mozilla Firefox\$FirefoxVersion\Main" -ErrorAction SilentlyContinue)."Install Directory"
             # Firefox without settings alreay applied
             $options.Add(@{
-                Label  = "Mozilla Firefox: Update settings"
-                Action = { Install-Firefox "$FirefoxPath" }
-            })
+                    Label  = "Mozilla Firefox: Update settings"
+                    Action = { Install-Firefox "$FirefoxPath" }
+                })
             # Firefox with settings already applied
             # This script previously used the JSON file for Firefox, so that must be checked in addition to the registry method
             if ((Test-Path "$FirefoxPath\distribution\policies.json") -or (Test-Path "HKLM:\SOFTWARE\Policies\Mozilla\Firefox\FirefoxHome")) {
                 $options.Add(@{
                         Label  = "Mozilla Firefox: Remove settings"
                         Action = { Uninstall-Firefox "$FirefoxPath" }
+                    })
+            }
+        }
+        else {
+            $options.Add(@{
+                    Label  = "Mozilla Firefox: Update settings"
+                    Action = { Install-Firefox }
+                })
+            if (Test-Path "HKLM:\SOFTWARE\Policies\Mozilla\Firefox\FirefoxHome") {
+                $options.Add(@{
+                        Label  = "Mozilla Firefox: Remove settings"
+                        Action = { Uninstall-Firefox }
                     })
             }
         }
