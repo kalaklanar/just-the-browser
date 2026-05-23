@@ -38,7 +38,25 @@ sudo rm "/Applications/Firefox.app/Contents/Resources/distribution/policies.json
 
 That command will delete the JSON configuration file used by previous versions of Just The Browser, if the file exists.
 
-### Linux installation
+### Linux installation for Firefox Flatpak
+
+Follow these instructions if you are using the [Firefox Flatpak package](https://flathub.org/en/apps/org.mozilla.firefox).
+
+1. Open the [configuration file](https://raw.githubusercontent.com/corbindavenport/just-the-browser/main/firefox/policies.json) and save it (`Ctrl+S`) anywhere on your computer. Make sure the file is called "policies.json" (without the quotes).
+2. Open a new Terminal window in the directory where the file is located. For example, if it's in your Downloads folder, open a Terminal and run `cd ~/Downloads` to switch to the Downloads directory.
+3. Find your Flatpak architecture and save it as a variable: `FLATPAK_ARCH=$(flatpak --default-arch)`
+4. Create the managed policies directory: `mkdir -p "$HOME/.local/share/flatpak/extension/org.mozilla.firefox.systemconfig/$FLATPAK_ARCH/stable/policies"`
+5. Copy the configuration file to the directory: `cp ./policies.json "$HOME/.local/share/flatpak/extension/org.mozilla.firefox.systemconfig/$FLATPAK_ARCH/stable/policies/"`
+6. Restart the browser.
+
+To remove the custom configuration, delete the `policies.json` file from the managed policies directory and restart the browser. You can do that with these commands:
+
+```
+FLATPAK_ARCH=$(flatpak --default-arch)
+rm "$HOME/.local/share/flatpak/extension/org.mozilla.firefox.systemconfig/$FLATPAK_ARCH/stable/policies/policies.json"
+```
+
+### Linux installation for system package
 
 1. Open the [configuration file](https://raw.githubusercontent.com/corbindavenport/just-the-browser/main/firefox/policies.json) and save it (`Ctrl+S`) anywhere on your computer. Make sure the file is called "policies.json" (without the quotes).
 2. Open a new Terminal window in the directory where the file is located. For example, if it's in your Downloads folder, open a Terminal and run `cd ~/Downloads` to switch to the Downloads directory.
