@@ -78,6 +78,8 @@
             <false/>
             <key>AllowBrowsingWithCopilot</key>
             <false/>
+            <key>PersonalizationReportingEnabled</key>
+            <false/>
 		</dict>
         <!-- Microsoft Edge Beta -->
 		<dict>
@@ -152,6 +154,8 @@
             <key>CopilotAddressBarSuggestionsEnabled</key>
             <false/>
             <key>AllowBrowsingWithCopilot</key>
+            <false/>
+            <key>PersonalizationReportingEnabled</key>
             <false/>
 		</dict>
         <!-- Microsoft Edge Dev -->
@@ -228,6 +232,8 @@
             <false/>
             <key>AllowBrowsingWithCopilot</key>
             <false/>
+            <key>PersonalizationReportingEnabled</key>
+            <false/>
 		</dict>
         <!-- Microsoft Edge Canary -->
 		<dict>
@@ -302,6 +308,8 @@
             <key>CopilotAddressBarSuggestionsEnabled</key>
             <false/>
             <key>AllowBrowsingWithCopilot</key>
+            <false/>
+            <key>PersonalizationReportingEnabled</key>
             <false/>
 		</dict>
 	</array>
