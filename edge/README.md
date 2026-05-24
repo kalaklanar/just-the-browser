@@ -63,6 +63,7 @@ These are the policy settings in the Just the Browser configuration file.
 | VisualSearchEnabled | Turns off the menu that appears when hovering the mouse over any image. Also turns off the visual search options in the context menu and sidebar search. |
 | EdgeHistoryAISearchEnabled | Turns off AI-enhanced search in the browsing history. |
 | CopilotAddressBarSuggestionsEnabled | Turns off Copilot chat suggestions in the address bar. |
+| AllowBrowsingWithCopilot| Blocks the Browsing with Copilot feature. |
 
 ### Documentation
 
