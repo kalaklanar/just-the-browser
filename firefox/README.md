@@ -68,7 +68,9 @@ To remove the custom configuration, delete the `policies.json` file from the dis
 
 ### Browser settings
 
-These are the policy settings in the Just the Browser configuration file.
+These are the policy settings in the Just the Browser configuration files for Firefox.
+
+Firefox 149+ uses the `AIControls` setting to configure generative AI features, replacing the `GenerativeAI` setting introduced in Firefox 144 and Firefox ESR 140.4. Both settings are included in Just the Browser's configuration to maintain backwards compatibility.
 
 | Feature | Information |
 | ------- | ----------- |
@@ -76,12 +78,14 @@ These are the policy settings in the Just the Browser configuration file.
 | `DisableTelemetry` | Prevents the upload of telemetry data. As of Firefox 83 and Firefox ESR 78.5, local storage of telemetry data is disabled as well. |
 | `DontCheckDefaultBrowser` | Prevents popup warnings about Firefox not being the default browser. |
 | `FirefoxHome` | Turns off stores, sponsored stories, and sponsored top sites on the Firefox Home page. |
-| `GenerativeAI` | Turns off generative AI features, including AI chatbots in the sidebar, link previews, and tab group suggestions. |
 | `AIControls` | Turns off most AI controls, including SmartTabGroups, LinkPreviewKeyPoints, SidebarChatbot, and the SmartWindow. PDFAltText and Translations are left enabled, but they can be turned off from `about:preferences#ai` if desired. |
+| `GenerativeAI` | The previous version of the AIControls setting for Firefox versions 144-148. |
 | `SearchEngines` | Removes Perplexity AI as a default search engine. |
-| `IPProtectionAvailable` | The built-in Firefox VPN is [normally blocked](https://support.mozilla.org/en-US/kb/built-in-vpn?as=u&utm_source=inproduct#:~:text=Enterprise%20note) when enterprise policies are active, this allows it to function again. |
+| `IPProtectionAvailable` | The built-in Firefox VPN is [normally blocked](https://support.mozilla.org/en-US/kb/built-in-vpn?as=u&utm_source=inproduct#:~:text=Enterprise%20note) when enterprise policies are active. This setting allows it to function again. |
 
 ### Documentation
 
+- [Firefox administrator reference](https://firefox-admin-docs.mozilla.org/reference/policies/)
+- [Block generative AI features with Firefox AI controls](https://support.mozilla.org/en-US/kb/firefox-ai-controls)
 - [Customize Firefox using policies.json](https://support.mozilla.org/en-US/kb/customizing-firefox-using-policiesjson)
-- [Firefox policies list](https://mozilla.github.io/policy-templates/)
+- [Firefox policies list (deprecated)](https://mozilla.github.io/policy-templates/)
