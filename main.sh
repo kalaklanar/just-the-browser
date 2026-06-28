@@ -1,7 +1,13 @@
 #!/bin/bash
 
+# Allow alternate base URL as first command-line argument, for testing and development
+if [ -z "$1" ]; then
+    BASEURL="https://raw.githubusercontent.com/corbindavenport/just-the-browser/main"
+else
+    BASEURL="$1"
+fi
+
 OS=$(uname)
-BASEURL="https://raw.githubusercontent.com/corbindavenport/just-the-browser/main"
 MICROSOFT_EDGE_MAC_CONFIG="$BASEURL/edge/edge.mobileconfig"
 GOOGLE_CHROME_MAC_CONFIG="$BASEURL/chrome/chrome.mobileconfig"
 FIREFOX_MAC_CONFIG="$BASEURL/firefox/firefox.mobileconfig"

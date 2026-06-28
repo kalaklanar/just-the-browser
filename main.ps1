@@ -4,8 +4,14 @@
 # GitHub requires TLS v1.2, but it's not enabled by default in PowerShell v5.0 and older releases
 [Net.ServicePointManager]::SecurityProtocol=[Net.SecurityProtocolType]::Tls12
 
+# Allow alternate base URL as first command-line argument, for testing and development
+if ($args.Count -eq 0) {
+    $BaseURL = "https://raw.githubusercontent.com/corbindavenport/just-the-browser/main"
+} else {
+    $BaseURL = $args[0]
+}
+
 $OS = Get-CimInstance Win32_OperatingSystem
-$BaseURL = "https://raw.githubusercontent.com/corbindavenport/just-the-browser/main/"
 $MicrosoftEdgeInstallRegistry = "$BaseURL/edge/install.reg"
 $MicrosoftEdgeUninstallRegistry = "$BaseURL/edge/uninstall.reg"
 $GoogleChromeInstallRegistry = "$BaseURL/chrome/install.reg"

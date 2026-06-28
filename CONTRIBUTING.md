@@ -20,3 +20,19 @@ The Windows script is a **PowerShell v5.0** script, so it can run out of the box
 If you are working on the script, please ensure you are not using PowerShell features or syntax from later versions, such as PowerShell 7/PowerShell Core.
 
 The Linux and macOS script is a Bash script. The baseline testing environment is the **Bash v3.2** shell bundled with macOS.
+
+### Testing with another branch or repository
+
+You can run the scripts with a different base URL with a command-line argument. Here's how to do it on macOS/Linux:
+
+```bash
+./main.sh "https://raw.githubusercontent.com/corbindavenport/just-the-browser/newbranch"
+```
+
+Here's how to do it on Windows:
+
+```powershell
+./main.ps1 "https://raw.githubusercontent.com/corbindavenport/just-the-browser/newbranch"
+```
+
+The alternative base URL should **not** have an ending forward slash (/).
